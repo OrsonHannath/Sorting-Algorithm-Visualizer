@@ -11,6 +11,10 @@ public class SortArray extends JPanel {
     int barWidth = 0;
     double heightScaleFactor = 0;
 
+    //Bubble sort
+    int currSortPos = 0;
+    int sortedElements = 0;
+
     public SortArray(int _size, int _min, int _max, SortType _sortType){
 
         //Set the array to the size passed in
@@ -29,7 +33,28 @@ public class SortArray extends JPanel {
 
     public void BubbleSort(){
 
+        if(currSortPos + 1 < elements.length && !sortingComplete) {
+             if(this.elements[currSortPos] > this.elements[currSortPos+1]){
 
+                 int temp = this.elements[currSortPos];
+                 this.elements[currSortPos] = this.elements[currSortPos+1];
+                 this.elements[currSortPos+1] = temp;
+                 sortedElements++;
+             }
+
+             currSortPos++;
+        }else{
+
+            if(sortedElements == 0){
+
+                System.out.println("Bubble Sort Complete");
+                sortingComplete = true;
+            }else{
+
+                currSortPos = 0;
+                sortedElements = 0;
+            }
+        }
     }
 
     public void SelectionSort(){
@@ -61,8 +86,9 @@ public class SortArray extends JPanel {
 
         for(int i = 0; i < this.elements.length; i++){
 
-            //System.out.println("x: " + i + ", y: " + 0 + ", width: " + barWidth + ", height: " + (int) (this.elements[i] / heightScaleFactor));
-            graphics2D.fillRect(i, 0, barWidth, (int) (this.elements[i] / heightScaleFactor));
+            //System.out.println("x: " + i + ", y: " + VisualGUI.WIN_HEIGHT + ", width: " + barWidth + ", height: " + (int) (this.elements[i] / heightScaleFactor));
+            graphics2D.setColor(Color.pink);
+            graphics2D.fillRect(i, VisualGUI.WIN_HEIGHT, barWidth, (int) -(this.elements[i] / heightScaleFactor));
         }
 
         //Run the correct sort algorithm that has been requested
