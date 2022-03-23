@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.JPanel;
-
 import javax.swing.JFrame;
 
 enum SortType {
@@ -40,72 +39,19 @@ public class VisualGUI {
         //Set the background colour of the window
         this.window.getContentPane().setBackground(this.bgColor);
 
-        arrayToSort = new SortArray(arraySize, arrayMin, arrayMax);
-    }
-
-    public SortType DetermineSortType(){
-
-        return this.sortType;
-    }
-
-    public void BubbleSort(){
-
-
-    }
-
-    public void SelectionSort(){
-
-
-    }
-
-    public void InsertionSort(){
-
-
-    }
-
-    public void HeapSort(){
-
-
-    }
-
-    public void MergeSort(){
-
-
+        //Currently has the array size to the window width so one pixel is one element in the array
+        arrayToSort = new SortArray(WIN_WIDTH, arrayMin, arrayMax, sortType);
+        this.window.add(arrayToSort);
     }
 
     public static void main(String[] args){
 
         VisualGUI visualGUI = new VisualGUI();
 
+        //Loop to make the sorting algorithm occur the whole time
         while(!visualGUI.paused){
 
-            SortType sortType = visualGUI.DetermineSortType();
-
-            //Run the correct sort algorithm that has been requested
-            switch (sortType){
-                case Bubble:
-                    visualGUI.BubbleSort();
-                    break;
-
-                case Selection:
-                    visualGUI.SelectionSort();
-                    break;
-
-                case Insertion:
-                    visualGUI.InsertionSort();
-                    break;
-
-                case Heap:
-                    visualGUI.HeapSort();
-                    break;
-
-                case Merge:
-                    visualGUI.MergeSort();
-                    break;
-
-                default:
-                    break;
-            }
+            visualGUI.arrayToSort.repaint();
         }
     }
 }
