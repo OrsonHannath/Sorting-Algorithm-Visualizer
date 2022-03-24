@@ -27,6 +27,7 @@ public class VisualGUI {
     int arrayMax = 999999;
 
     SortType sortType = SortType.Bubble;
+    StepType stepType = StepType.OnePass;
 
     public VisualGUI(){
 
@@ -40,7 +41,7 @@ public class VisualGUI {
         this.window.getContentPane().setBackground(this.bgColor);
 
         //Currently has the array size to the window width so one pixel is one element in the array
-        arrayToSort = new SortArray(WIN_WIDTH, arrayMin, arrayMax, sortType);
+        arrayToSort = new SortArray(WIN_WIDTH, arrayMin, arrayMax, sortType, stepType);
         this.window.add(arrayToSort);
     }
 

@@ -1,25 +1,48 @@
 import javax.swing.*;
 import java.awt.*;
 
+//Individual shows each frame as one step of one element
+//OnePass shows each frame as steps completed on all elements in the array
+enum StepType{
+    Individual,
+    OnePass
+}
+
 public class SortArray extends JPanel {
 
     //The elements array
     int[] elements;
     boolean sortingComplete = false;
     SortType sortType = null;
+    StepType stepType = null;
 
     int barWidth = 0;
     double heightScaleFactor = 0;
+
+    int frameStepAmount = 0;
 
     //Bubble sort
     int currSortPos = 0;
     int sortedElements = 0;
 
-    public SortArray(int _size, int _min, int _max, SortType _sortType){
+    public SortArray(int _size, int _min, int _max, SortType _sortType, StepType _stepType){
 
         //Set the array to the size passed in
         this.elements = new int[_size];
         this.sortType = _sortType;
+
+        switch (_stepType){
+
+            case Individual:
+                this.frameStepAmount = 1;
+                break;
+            case OnePass:
+                this.frameStepAmount = _size;
+                break;
+            default:
+                this.frameStepAmount = 1;
+                break;
+        }
 
         barWidth = _size / VisualGUI.WIN_WIDTH;
         heightScaleFactor = _max / VisualGUI.WIN_HEIGHT;
@@ -33,27 +56,32 @@ public class SortArray extends JPanel {
 
     public void BubbleSort(){
 
-        if(currSortPos + 1 < elements.length && !sortingComplete) {
-             if(this.elements[currSortPos] > this.elements[currSortPos+1]){
+        int currStep = 0;
 
-                 int temp = this.elements[currSortPos];
-                 this.elements[currSortPos] = this.elements[currSortPos+1];
-                 this.elements[currSortPos+1] = temp;
-                 sortedElements++;
-             }
+        while(currStep < frameStepAmount) {
+            if (currSortPos + 1 < elements.length && !sortingComplete) {
+                if (this.elements[currSortPos] > this.elements[currSortPos + 1]) {
 
-             currSortPos++;
-        }else{
+                    int temp = this.elements[currSortPos];
+                    this.elements[currSortPos] = this.elements[currSortPos + 1];
+                    this.elements[currSortPos + 1] = temp;
+                    sortedElements++;
+                }
 
-            if(sortedElements == 0){
+                currSortPos++;
+            } else {
 
-                System.out.println("Bubble Sort Complete");
-                sortingComplete = true;
-            }else{
+                if (sortedElements == 0) {
 
-                currSortPos = 0;
-                sortedElements = 0;
+                    System.out.println("Bubble Sort Complete");
+                    sortingComplete = true;
+                } else {
+
+                    currSortPos = 0;
+                    sortedElements = 0;
+                }
             }
+            currStep++;
         }
     }
 
@@ -92,29 +120,31 @@ public class SortArray extends JPanel {
         }
 
         //Run the correct sort algorithm that has been requested
-        switch (sortType){
-            case Bubble:
-                BubbleSort();
-                break;
+        if(!sortingComplete) {
+            switch (sortType) {
+                case Bubble:
+                    BubbleSort();
+                    break;
 
-            case Selection:
-                SelectionSort();
-                break;
+                case Selection:
+                    SelectionSort();
+                    break;
 
-            case Insertion:
-                InsertionSort();
-                break;
+                case Insertion:
+                    InsertionSort();
+                    break;
 
-            case Heap:
-                HeapSort();
-                break;
+                case Heap:
+                    HeapSort();
+                    break;
 
-            case Merge:
-                MergeSort();
-                break;
+                case Merge:
+                    MergeSort();
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
     }
 }
