@@ -26,8 +26,8 @@ public class VisualGUI {
     int arrayMin = 0;
     int arrayMax = 999999;
 
-    SortType sortType = SortType.Bubble;
-    StepType stepType = StepType.OnePass;
+    SortType sortType = SortType.Selection;
+    StepType stepType = StepType.Individual;
 
     public VisualGUI(){
 

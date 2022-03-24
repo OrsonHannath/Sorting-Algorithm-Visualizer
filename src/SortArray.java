@@ -21,9 +21,12 @@ public class SortArray extends JPanel {
 
     int frameStepAmount = 0;
 
-    //Bubble sort
+    //Bubble Sort
     int currSortPos = 0;
     int sortedElements = 0;
+
+    //Selection Sort
+    int selectionSortPos = 0;
 
     public SortArray(int _size, int _min, int _max, SortType _sortType, StepType _stepType){
 
@@ -87,7 +90,33 @@ public class SortArray extends JPanel {
 
     public void SelectionSort(){
 
+        //One Step = Go over the array find the smallest value and place it at the start of the duplicate array plus n
+        int currSmallest = Integer.MAX_VALUE;
+        int currSmallestPos = 0;
 
+        if(selectionSortPos < elements.length && !sortingComplete) {
+            for (int i = 0; i < elements.length; i++) {
+
+                //Make sure we are not checking the values we have already positioned
+                if (i >= selectionSortPos) {
+                    //If the number checked is smaller than current smallest set currSmallest to the ith element that is being checked
+                    if (elements[i] < currSmallest) {
+                        currSmallest = elements[i];
+                        currSmallestPos = i;
+                    }
+                }
+            }
+
+            //Switch the smallest element in the array back to the selectionSortPos
+            int switchVal = elements[selectionSortPos];
+            elements[selectionSortPos] = currSmallest;
+            elements[currSmallestPos] = switchVal;
+            selectionSortPos++;
+        }else{
+
+            System.out.println("Selection Sort Complete");
+            sortingComplete = true;
+        }
     }
 
     public void InsertionSort(){
