@@ -26,8 +26,7 @@ public class VisualGUI {
     int arrayMin = 0;
     int arrayMax = 999999;
 
-    SortType sortType = SortType.Selection;
-    StepType stepType = StepType.Individual;
+    SortType sortType = SortType.Insertion;
 
     public VisualGUI(){
 
@@ -41,7 +40,7 @@ public class VisualGUI {
         this.window.getContentPane().setBackground(this.bgColor);
 
         //Currently has the array size to the window width so one pixel is one element in the array
-        arrayToSort = new SortArray(WIN_WIDTH, arrayMin, arrayMax, sortType, stepType);
+        arrayToSort = new SortArray(WIN_WIDTH, arrayMin, arrayMax, sortType);
         this.window.add(arrayToSort);
     }
 

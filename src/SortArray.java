@@ -1,25 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 
-//Individual shows each frame as one step of one element
-//OnePass shows each frame as steps completed on all elements in the array
-enum StepType{
-    Individual,
-    OnePass
-}
-
 public class SortArray extends JPanel {
 
     //The elements array
     int[] elements;
     boolean sortingComplete = false;
     SortType sortType = null;
-    StepType stepType = null;
 
     int barWidth = 0;
     double heightScaleFactor = 0;
-
-    int frameStepAmount = 0;
 
     //Bubble Sort
     int currSortPos = 0;
@@ -28,24 +18,14 @@ public class SortArray extends JPanel {
     //Selection Sort
     int selectionSortPos = 0;
 
-    public SortArray(int _size, int _min, int _max, SortType _sortType, StepType _stepType){
+    //Insertion Sort
+    int insertionElementsSorted = 0;
+
+    public SortArray(int _size, int _min, int _max, SortType _sortType){
 
         //Set the array to the size passed in
         this.elements = new int[_size];
         this.sortType = _sortType;
-
-        switch (_stepType){
-
-            case Individual:
-                this.frameStepAmount = 1;
-                break;
-            case OnePass:
-                this.frameStepAmount = _size;
-                break;
-            default:
-                this.frameStepAmount = 1;
-                break;
-        }
 
         barWidth = _size / VisualGUI.WIN_WIDTH;
         heightScaleFactor = _max / VisualGUI.WIN_HEIGHT;
@@ -59,9 +39,7 @@ public class SortArray extends JPanel {
 
     public void BubbleSort(){
 
-        int currStep = 0;
-
-        while(currStep < frameStepAmount) {
+        for (int i = 0; i < elements.length; i++) {
             if (currSortPos + 1 < elements.length && !sortingComplete) {
                 if (this.elements[currSortPos] > this.elements[currSortPos + 1]) {
 
@@ -84,7 +62,6 @@ public class SortArray extends JPanel {
                     sortedElements = 0;
                 }
             }
-            currStep++;
         }
     }
 
@@ -121,7 +98,29 @@ public class SortArray extends JPanel {
 
     public void InsertionSort(){
 
+        //EXAMINE ITEM AND Compare to the item on the left
+        //Insert the item into the correct position in the array by checking over the elements before it untill it is in the correct spot
+        if(!sortingComplete) {
 
+            insertionElementsSorted = 0;
+
+            for (int i = 1; i < elements.length; i++) {
+
+                if (elements[i] < elements[i - 1]) {
+
+                    int tempElementInt = elements[i - 1];
+
+                    elements[i - 1] = elements[i];
+                    elements[i] = tempElementInt;
+                    insertionElementsSorted++;
+                }
+            }
+
+            if(insertionElementsSorted == 0){
+                sortingComplete = true;
+                System.out.println("Insertion Sort Complete");
+            }
+        }
     }
 
     public void HeapSort(){
