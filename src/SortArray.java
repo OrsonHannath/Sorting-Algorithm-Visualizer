@@ -237,16 +237,6 @@ public class SortArray extends JPanel {
         Graphics2D graphics2D = (Graphics2D) g;
         super.paintComponent(graphics2D);
 
-        //int min = Integer.MAX_VALUE;
-        //for(int x = 0; x < this.elements.length; x++){
-
-        //if(elements[x] < min){
-        //min = elements[x];
-        //}
-        //}
-
-        //System.out.println("Min in Elements: " + min );
-
         for(int i = 0; i < this.elements.length; i++){
 
             //System.out.println("x: " + i + ", y: " + VisualGUI.WIN_HEIGHT + ", width: " + barWidth + ", height: " + (int) (this.elements[i] / heightScaleFactor));

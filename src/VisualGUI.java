@@ -25,7 +25,7 @@ public class VisualGUI {
     int arrayMin = 0;
     int arrayMax = 999999;
 
-    SortType sortType = SortType.Merge;
+    SortType sortType = SortType.Merge; //CHANGE THIS TO CHANGE THE TYPE OF SORT THAT GETS RAN
 
     public VisualGUI(){
 
@@ -46,6 +46,16 @@ public class VisualGUI {
     public static void main(String[] args){
 
         VisualGUI visualGUI = new VisualGUI();
+
+        //Delay the program from running until the window is definitely open
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
 
         //Loop to make the sorting algorithm occur the whole time
         while(!visualGUI.paused){
