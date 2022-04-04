@@ -21,6 +21,9 @@ public class SortArray extends JPanel {
     //Insertion Sort
     int insertionElementsSorted = 0;
 
+    //Merge Sort
+    int mergeSortPos = 0;
+
     public SortArray(int _size, int _min, int _max, SortType _sortType){
 
         //Set the array to the size passed in
@@ -123,14 +126,108 @@ public class SortArray extends JPanel {
         }
     }
 
-    public void HeapSort(){
-
-
-    }
-
     public void MergeSort(){
 
+        if(!sortingComplete){
 
+            sortingComplete = true;
+            MergeSort_sort(this.elements, 0, this.elements.length - 1);
+        }
+    }
+
+    public void MergeSort_merge(int inArray[], int startPos, int midPos, int endPos){
+
+        //Find the size of each array
+        int leftArrSize = midPos - startPos + 1;
+        int rightArrSize = endPos - midPos;
+
+        //System.out.println(leftArrSize);
+        //System.out.println(rightArrSize);
+
+        //Temporary arrays
+        int tempLeftArr[] = new int[leftArrSize];
+        int tempRightArr[] = new int[rightArrSize];
+
+        //Populate the temp arrays
+        for(int i = 0; i < leftArrSize; ++i){
+            tempLeftArr[i] = inArray[startPos + i];
+        }
+        for(int i = 0; i < rightArrSize; ++i){
+            tempRightArr[i] = inArray[midPos + 1 + i];
+        }
+
+        //Merge the temp arrays
+        int leftIndex = 0, rightIndex = 0, mergedIndex = startPos;
+
+        //Iterate through all elements in LeftArray and RightArray
+        while(leftIndex < leftArrSize && rightIndex < rightArrSize){
+
+            //Check if the leftArray at index is less than the rightArray at index
+            if(tempLeftArr[leftIndex] <= tempRightArr[rightIndex]){
+
+                //Set the final array value at index to the value from the leftArray at index
+                inArray[mergedIndex] = tempLeftArr[leftIndex];
+                leftIndex++;
+            }else{
+
+                //Set the final array value at index to the value from the rightArray at index
+                inArray[mergedIndex] = tempRightArr[rightIndex];
+                rightIndex++;
+            }
+
+            mergedIndex++;
+        }
+
+        //Check for any remaining elements in tempLeftArray and tempRightArray
+        while(leftIndex < leftArrSize) {
+
+            inArray[mergedIndex] = tempLeftArr[leftIndex];
+            leftIndex++;
+            mergedIndex++;
+        }
+
+        while(rightIndex < rightArrSize) {
+
+            inArray[mergedIndex] = tempRightArr[rightIndex];
+            rightIndex++;
+            mergedIndex++;
+        }
+
+        //System.out.println("Elements: " + this.elements[0]);
+        //System.out.println("inArray: " + inArray[0]);
+
+        //int min = Integer.MAX_VALUE;
+        //for(int x = 0; x < this.elements.length; x++){
+
+            //if(elements[x] < min){
+                //min = elements[x];
+            //}
+        //}
+
+        //System.out.println("Min in Elements: " + min );
+    }
+
+    public void MergeSort_sort(int inArray[], int startPos, int endPos){
+
+        if(startPos < endPos) {
+
+            //System.out.println("Start Pos: " + startPos);
+            //System.out.println("End Pos: " + endPos);
+
+            //Find array mid-point
+            int midPos = startPos + (endPos - startPos) / 2;
+
+            //Sort each of the halves
+            MergeSort_sort(inArray, startPos, midPos); //Left Half
+            MergeSort_sort(inArray, midPos + 1, endPos); //Right half
+
+            //Merge the halves
+            MergeSort_merge(inArray, startPos, midPos, endPos);
+
+            //Everytime sort is called also call paint
+            Graphics g = this.getGraphics();
+            paint(g);
+        }
     }
 
     //Paint the current array and then do one step of the sort
@@ -139,6 +236,16 @@ public class SortArray extends JPanel {
 
         Graphics2D graphics2D = (Graphics2D) g;
         super.paintComponent(graphics2D);
+
+        //int min = Integer.MAX_VALUE;
+        //for(int x = 0; x < this.elements.length; x++){
+
+        //if(elements[x] < min){
+        //min = elements[x];
+        //}
+        //}
+
+        //System.out.println("Min in Elements: " + min );
 
         for(int i = 0; i < this.elements.length; i++){
 
@@ -160,10 +267,6 @@ public class SortArray extends JPanel {
 
                 case Insertion:
                     InsertionSort();
-                    break;
-
-                case Heap:
-                    HeapSort();
                     break;
 
                 case Merge:

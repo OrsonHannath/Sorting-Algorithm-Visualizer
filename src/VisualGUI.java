@@ -6,7 +6,6 @@ enum SortType {
     Bubble,
     Selection,
     Insertion,
-    Heap,
     Merge
 }
 
@@ -26,20 +25,20 @@ public class VisualGUI {
     int arrayMin = 0;
     int arrayMax = 999999;
 
-    SortType sortType = SortType.Insertion;
+    SortType sortType = SortType.Merge;
 
     public VisualGUI(){
 
         //Set up the window using Swing JFrame
         this.window = new JFrame("Sorting Algorithm Visualizer");
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.window.setSize(this.WIN_WIDTH, this.WIN_HEIGHT);
+        this.window.setSize(this.WIN_WIDTH + 15, this.WIN_HEIGHT + 40);
         this.window.setVisible(true);
 
         //Set the background colour of the window
         this.window.getContentPane().setBackground(this.bgColor);
 
-        //Currently has the array size to the window width so one pixel is one element in the array
+        //Currently, has the array size to the window width so one pixel is one element in the array
         arrayToSort = new SortArray(WIN_WIDTH, arrayMin, arrayMax, sortType);
         this.window.add(arrayToSort);
     }
